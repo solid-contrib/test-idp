@@ -43,7 +43,7 @@ module.exports.router = (app, config) => {
 module.exports.getTokens = (audience, config) => {
   return [
     {
-      name: 'ALICE_ID_GOOD',
+      name: 'BOB_ID_GOOD',
       token: generateToken({
         token_type: 'id',
         iss: `https://alice.${config.host}`,
@@ -54,7 +54,7 @@ module.exports.getTokens = (audience, config) => {
       }, JWKS)
     },
     {
-      name: 'ALICE_POP_FOR_GOOD_APP_GOOD',
+      name: 'BOB_POP_FOR_GOOD_APP_GOOD',
       token: generateToken({
         token_type: 'pop',
         iss: 'https://goodapp.example',
@@ -72,7 +72,7 @@ module.exports.getTokens = (audience, config) => {
       }, config.goodAppJWKS)
     },
     {
-      name: 'ALICE_POP_FOR_BAD_APP_GOOD',
+      name: 'BOB_POP_FOR_BAD_APP_GOOD',
       token: generateToken({
         token_type: 'pop',
         iss: 'https://badapp.example',
