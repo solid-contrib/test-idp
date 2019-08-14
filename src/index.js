@@ -1,15 +1,32 @@
 const express = require('express')
-const subdomain = require('express-subdomain')
 
-const aliceRouter = require('./routers/alice/alice')
-const bobRouter = require('./routers/bob/bob')
-const charlieRouter = require('./routers/charlie/charlie')
+const generateJWKSet = require('./util/generateJWKSet')
+
+const alice = require('./personas/alice/alice')
+const bob = require('./personas/bob/bob')
+
+const personas = [ alice, bob ]
 
 const app = express()
 
-app.use(subdomain('alice', aliceRouter))
-app.use(subdomain('bob', bobRouter))
-app.use(subdomain('charlie', charlieRouter))
+const config = {
+  host: process.env.HOST || 'idp.test.solidproject.org',
+  goodAppJWKS: generateJWKSet(),
+  badAppJWKS: generateJWKSet()
+}
+
+personas.forEach((persona) => {
+  persona.router(app, config)
+})
+
+app.get('/tokens', (req, res) => {
+  const aud = req.query.aud
+  res.send(
+    personas.map(
+      (persona) => persona.getTokens(aud, config)
+    ).flat()
+  )
+})
 
 const port = process.env.PORT || 8080
 

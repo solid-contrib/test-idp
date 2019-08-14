@@ -19,8 +19,12 @@
   },
   "homepage": "https://github.com/solid/test-idp#readme",
   "dependencies": {
+    "@panva/jose": "^1.6.1",
     "express": "^4.17.1",
     "express-subdomain": "^1.0.5",
+    "handlebars": "^4.1.2",
+    "njwt": "^1.0.0",
+    "node-jwk": "^0.1.0",
     "nodemon": "^1.19.1"
   }
 }

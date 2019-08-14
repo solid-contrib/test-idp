@@ -1,10 +1,10 @@
 {
-  "issuer":"https://alice.idp.test.solidproject.org",
-  "authorization_endpoint":"https://alice.idp.test.solidproject.org/authorize",
-  "token_endpoint":"https://alice.idp.test.solidproject.org/token",
-  "userinfo_endpoint":"https://alice.idp.test.solidproject.org/userinfo",
-  "jwks_uri":"https://alice.idp.test.solidproject.org/jwks",
-  "registration_endpoint":"https://alice.idp.test.solidproject.org/register",
+  "issuer":"https://alice.{{host}}",
+  "authorization_endpoint":"https://alice.{{host}}/authorize",
+  "token_endpoint":"https://alice.{{host}}/token",
+  "userinfo_endpoint":"https://alice.{{host}}/userinfo",
+  "jwks_uri":"https://alice.{{host}}/jwks",
+  "registration_endpoint":"https://alice.{{host}}/register",
   "response_types_supported":[
      "code",
      "code token",
@@ -52,6 +52,6 @@
   "request_parameter_supported":true,
   "request_uri_parameter_supported":false,
   "require_request_uri_registration":false,
-  "check_session_iframe":"https://alice.idp.test.solidproject.org/session",
-  "end_session_endpoint":"https://alice.idp.test.solidproject.org/logout"
+  "check_session_iframe":"https://alice.{{host}}/session",
+  "end_session_endpoint":"https://alice.{{host}}/logout"
 }
