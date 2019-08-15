@@ -4,12 +4,12 @@
 const express = require('express')
 const path = require('path')
 const fs = require('fs')
-const subdomain = require('express-subdomain')
 const Handlebars = require('handlebars')
 
 const generateToken = require('../../util/generateToken')
 const generateJWKSet = require('../../util/generateJWKSet')
 const generateCnfClaim = require('../../util/generateCnfClaim')
+const isSubdomain = require('../../util/isSubdomain')
 
 const JWKS = generateJWKSet()
 
@@ -26,7 +26,7 @@ module.exports.router = (app, config) => {
     res.set('content-type', 'application/json')
     res.send(openidConfiguration)
   })
-  WebIDRouter.get('/profile/card#me', (req, res) => {
+  WebIDRouter.get('/profile/card', (req, res) => {
     res.set('content-type', 'text/turtle')
     res.send(profile)
   })
@@ -35,9 +35,15 @@ module.exports.router = (app, config) => {
     res.send(JWKS.toJWKS())
   })
 
-  app.use(subdomain('bobwebid', WebIDRouter))
-  app.use(subdomain('bobidp', IdpRouter))
-
+  app.use((req, res, next) => {
+    if (isSubdomain('bobwebid', config.host, req.hostname)) {
+      WebIDRouter(req, res, next)
+    } else if (isSubdomain('bobidp', config.host, req.hostname)) {
+      IdpRouter(req, res, next)
+    } else {
+      next()
+    }
+  })
 }
 
 module.exports.getTokens = (audience, config) => {

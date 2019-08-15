@@ -4,12 +4,12 @@
 const express = require('express')
 const path = require('path')
 const fs = require('fs')
-const subdomain = require('express-subdomain')
 const Handlebars = require('handlebars')
 
 const generateToken = require('../../util/generateToken')
 const generateJWKSet = require('../../util/generateJWKSet')
 const generateCnfClaim = require('../../util/generateCnfClaim')
+const isSubdomain = require('../../util/isSubdomain')
 
 const JWKS = generateJWKSet()
 
@@ -29,7 +29,7 @@ module.exports.router = (app, config) => {
     res.set('Link', `<https://alice.${config.host}/profile/.well-known/solid>; rel="service", <https://alice.${config.host}>; rel="http://openid.net/specs/connect/1.0/issuer", <card.acl>; rel="acl", <card.meta>; rel="describedBy", <http://www.w3.org/ns/ldp#Resource>; rel="type"`)
     res.send()
   })
-  Router.get('/profile/card#me', (req, res) => {
+  Router.get('/profile/card', (req, res) => {
     res.set('content-type', 'text/turtle')
     res.send(profile)
   })
@@ -38,7 +38,13 @@ module.exports.router = (app, config) => {
     res.send(JWKS.toJWKS())
   })
 
-  app.use(subdomain('alice', Router))
+  app.use((req, res, next) => {
+    if (isSubdomain('alice', config.host, req.hostname)) {
+      Router(req, res, next)
+    } else {
+      next()
+    }
+  })
 
 }
 
