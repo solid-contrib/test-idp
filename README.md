@@ -30,7 +30,7 @@ https://example.com/tokens?aud=https://mystorageserver.example
 
 Where `https://mystorageserver.example` is the URL of your storage server.
 
-At the momemnt, this will return 6 tokens:
+At the moment, this will return 6 tokens:
  - `ALICE_ID_GOOD`: A good ID Token representing Alice herself (not operating through any app)
  - `ALICE_POP_FOR_GOOD_APP_GOOD`: A good PoP token representing Alice using Good App (an app that is in Alices's trusted apps)
  - `ALICE_POP_FOR_BAD_APP_GOOD`: A good PoP token representing Alice using Bad App (an app that is not in Alices's trusted apps)
