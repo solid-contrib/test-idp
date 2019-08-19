@@ -18,6 +18,14 @@ Your test-idp host is now `example.com`
 
 Ensure that you have a wildcard host on the subdomain for your host. If your host is `example.com` then `*.example.com` should also be directed to the test-idp
 
+## WebIDs
+
+This module exposes WebIDs for test users. Currently, they are
+
+- https://alice.idp.test.solidproject.org/profile/card#me 
+- https://bobwebid.idp.test.solidproject.org/profile/card#me
+
+
 ## Getting tokens
 
 Once your test-idp server is running, you can generate tokens test
@@ -46,3 +54,5 @@ https://example.com/tokens/ALICE_ID_GOOD?aud=https://mystorageserver.example
 ```
 
 This will return a single bearer token.
+
+
