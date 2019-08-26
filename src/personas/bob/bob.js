@@ -1,5 +1,5 @@
 /**
- * Alice is a law abiding citizen who has a WebID and IDP on the same server
+ * Bob is a law abiding citizen who has a WebID and IDP on different servers
  */
 const express = require('express')
 const path = require('path')
@@ -52,10 +52,10 @@ module.exports.getTokens = (audience, config) => {
       name: 'BOB_ID_GOOD',
       token: generateToken({
         token_type: 'id',
-        iss: `https://alice.${config.host}`,
+        iss: `https://bobidp.${config.host}`,
         iat: new Date('2000-01-01').getTime(),
         exp: new Date('2099-01-01').getTime(),
-        sub: `https://alice.${config.host}/profile/card#me`,
+        sub: `https://bobwebid.${config.host}/profile/card#me`,
         aud: audience
       }, JWKS)
     },
@@ -69,9 +69,9 @@ module.exports.getTokens = (audience, config) => {
         aud: audience,
         id_token: generateToken({
           token_type: 'id',
-          iss: `https://alice.${config.host}`,
+          iss: `https://bobidp.${config.host}`,
           exp: new Date('2099-01-01').getTime(),
-          sub: `https://alice.${config.host}/profile/card#me`,
+          sub: `https://bobwebid.${config.host}/profile/card#me`,
           aud: 'https://goodapp.example',
           cnf: generateCnfClaim(config.goodAppJWKS)
         }, JWKS)
@@ -87,10 +87,10 @@ module.exports.getTokens = (audience, config) => {
         aud: audience,
         id_token: generateToken({
           token_type: 'id',
-          iss: `https://alice.${config.host}`,
+          iss: `https://bobidp.${config.host}`,
           iat: new Date('2000-01-01').getMilliseconds(),
           exp: new Date('2099-01-01').getTime(),
-          sub: `https://alice.${config.host}/profile/card#me`,
+          sub: `https://bobwebid.${config.host}/profile/card#me`,
           aud: 'https://badapp.example',
           cnf: generateCnfClaim(config.badAppJWKS)
         }, JWKS)
