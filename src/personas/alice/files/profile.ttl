@@ -3,6 +3,7 @@
 @prefix pim: <http://www.w3.org/ns/pim/space#>.
 @prefix schema: <http://schema.org/>.
 @prefix ldp: <http://www.w3.org/ns/ldp#>.
+@prefix acl: <http://www.w3.org/ns/auth/acl#>.
 
 <>
     a foaf:PersonalProfileDocument ;
@@ -20,13 +21,13 @@
 
     ldp:inbox </inbox/> ;
 
-    n1:trustedApp
+    acl:trustedApp
             [
-                n1:mode n1:Append, n1:Control, n1:Read, n1:Write;
-                n1:origin <https://goodapp.example>
+                acl:mode acl:Append, acl:Control, acl:Read, acl:Write;
+                acl:origin <https://goodapp.example>
             ];
 
     pim:preferencesFile </settings/prefs.ttl> ;  # private settings/preferences
     solid:publicTypeIndex </settings/publicTypeIndex.ttl> ;
     solid:privateTypeIndex </settings/privateTypeIndex.ttl> .
-    
+
